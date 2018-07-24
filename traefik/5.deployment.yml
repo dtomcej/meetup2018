@@ -17,7 +17,7 @@ spec:
         name: traefik-ingress-lb
     spec:
       serviceAccountName: traefik-ingress-controller
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 5
       containers:
       - image: traefik:v1.7.0-rc2
         name: traefik-ingress-lb

@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: boulder
+  namespace: kube-system
+  labels:
+    k8s-app: boulder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: boulder
+  template:
+    metadata:
+      labels:
+        k8s-app: boulder
+        name: boulder
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - image: letsencrypt/boulder-tools:2018-03-07
+        name: boulder
+        env:
+        - name: FAKE_DNS
+          value: 10.110.110.110
+        ports:
+        - name: http
+          containerPort: 4001

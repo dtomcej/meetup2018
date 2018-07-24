@@ -6,6 +6,7 @@ metadata:
 spec:
   selector:
     k8s-app: traefik-ingress-lb
+  clusterIP: 10.110.110.110
   ports:
     - protocol: TCP
       port: 80
@@ -19,4 +20,12 @@ spec:
       port: 8080
       nodePort: 30880
       name: api
+    - protocol: TCP
+      port: 5002
+      targetPort: 80
+      name: http-challenge
+    - protocol: TCP
+      port: 5001
+      targetPort: 443
+      name: tls-challenge
   type: NodePort
