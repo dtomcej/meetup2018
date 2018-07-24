@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik
+        name: traefik-ingress-lb
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        - name: api
+          containerPort: 8080
+        args:
+        - --acme
+        - --acme.email=test@traefik.io
+        - --acme.storage=/acme.json
+        - --acme.entrypoint=https
+        - --acme.onhostrule=true
+        - --acme.caserver=boulder.kube-system:4001/directory
+        - --acme.httpchallenge
+        - --acme.httpchallenge.entrypoint=http
+        - --api
+        - --defaultentrypoints=http,https
+        - --entrypoints='Name:http Address::80 Redirect.Entrypoint:https'
+        - --entrypoints='Name:https Address::443 TLS'
+        - --kubernetes
+        - --logLevel=DEBUG
