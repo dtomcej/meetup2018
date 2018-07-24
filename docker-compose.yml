@@ -71,7 +71,7 @@ services :
   traefik:
     build:
       context: ../..
-    image: containous/traefik:v1.7.0-rc2
+    image: traefik:v1.7.0-rc2
     command: --configFile=/etc/traefik/conf/acme.toml
     restart: unless-stopped
     extra_hosts:

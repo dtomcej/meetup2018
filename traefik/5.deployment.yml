@@ -19,7 +19,7 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       containers:
-      - image: traefik
+      - image: traefik:v1.7.0-rc2
         name: traefik-ingress-lb
         ports:
         - name: http
@@ -39,7 +39,7 @@ spec:
         - --acme.httpchallenge.entrypoint=http
         - --api
         - --defaultentrypoints=http,https
-        - --entrypoints='Name:http Address::80 Redirect.Entrypoint:https'
-        - --entrypoints='Name:https Address::443 TLS'
+        - "--entrypoints=Name:http Address::80 Redirect.Entrypoint:https"
+        - "--entrypoints=Name:https Address::443 TLS"
         - --kubernetes
         - --logLevel=DEBUG

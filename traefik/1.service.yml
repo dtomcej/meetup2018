@@ -9,11 +9,14 @@ spec:
   ports:
     - protocol: TCP
       port: 80
+      nodePort: 30080
       name: http
     - protocol: TCP
       port: 443
+      nodePort: 30443
       name: https
     - protocol: TCP
       port: 8080
+      nodePort: 30880
       name: api
   type: NodePort
