@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: boulder-mysql
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: boulder-mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      name: mysql

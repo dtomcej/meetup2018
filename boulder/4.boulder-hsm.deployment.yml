@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: boulder-hsm
+  namespace: kube-system
+  labels:
+    k8s-app: boulder-hsm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: boulder-hsm
+  template:
+    metadata:
+      labels:
+        k8s-app: boulder-hsm
+        name: boulder-hsm
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: boulder-hsm
+        image: boulder-tools-go1.10.2:2018-06-12
+        command: ["/usr/local/bin/pkcs11-daemon", "/usr/lib/softhsm/libsofthsm2.so"]
+        env:
+        - name: PKCS11_DAEMON_SOCKET
+          value: tcp://0.0.0.0:5657
+        ports:
+        - name: tcp
+          containerPort: 5657

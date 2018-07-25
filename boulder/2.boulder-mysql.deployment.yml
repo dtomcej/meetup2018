@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: boulder-mysql
+  namespace: kube-system
+  labels:
+    k8s-app: boulder-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: boulder-mysql
+  template:
+    metadata:
+      labels:
+        k8s-app: boulder-mysql
+        name: boulder-mysql
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: boulder-mysql
+        image: mariadb:10.1
+        args: ["mysqld", "--bind-address=0.0.0.0"]
+        env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        ports:
+        - name: tcp
+          containerPort: 3306

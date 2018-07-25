@@ -18,11 +18,16 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       containers:
-      - image: letsencrypt/boulder-tools:2018-03-07
-        name: boulder
+      - name: boulder
+        image: letsencrypt/boulder-tools-go1.10.2:2018-06-12
+        command: ["/go/src/github.com/letsencrypt/boulder/test/entrypoint.sh"]
         env:
         - name: FAKE_DNS
           value: 10.110.110.110
+        - name: PKCS11_PROXY_SOCKET
+          value: tcp://boulder-hsm:5657
+        - name: BOULDER_CONFIG_DIR
+          value: test/config
         ports:
-        - name: http
-          containerPort: 4001
+        - containerPort: 4001
+        - containerPort: 9092

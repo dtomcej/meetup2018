@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: boulder-hsm
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: boulder-hsm
+  ports:
+    - protocol: TCP
+      port: 5657
+      name: hsm

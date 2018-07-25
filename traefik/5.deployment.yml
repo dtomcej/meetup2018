@@ -19,7 +19,7 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 5
       containers:
-      - image: traefik:v1.7.0-rc2
+      - image: traefik:v1.7.0-rc2-alpine
         name: traefik-ingress-lb
         ports:
         - name: http
@@ -34,9 +34,10 @@ spec:
         - --acme.storage=/acme.json
         - --acme.entrypoint=https
         - --acme.onhostrule=true
-        - --acme.caserver=boulder.kube-system:4001/directory
+        - --acme.caserver=http://boulder:4001/directory
         - --acme.httpchallenge
         - --acme.httpchallenge.entrypoint=http
+        - --acme.acmelogging
         - --api
         - --defaultentrypoints=http,https
         - "--entrypoints=Name:http Address::80 Redirect.Entrypoint:https"

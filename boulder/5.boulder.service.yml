@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: boulder
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: boulder
+  ports:
+    - protocol: TCP
+      port: 4001
+      name: http
