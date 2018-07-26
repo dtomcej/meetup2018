@@ -10,3 +10,15 @@ spec:
     - protocol: TCP
       port: 4001
       name: http
+    - protocol: TCP
+      port: 4500
+      name: publisher
+    - protocol: TCP
+      port: 4501
+      name: publisher-b
+    - protocol: TCP
+      port: 4510
+      name: publisher-c
+    - protocol: TCP
+      port: 4511
+      name: publisher-d

@@ -19,7 +19,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: boulder-hsm
-        image: boulder-tools-go1.10.2:2018-06-12
+        image: dtomcej/boulder:meetup2018
         command: ["/usr/local/bin/pkcs11-daemon", "/usr/lib/softhsm/libsofthsm2.so"]
         env:
         - name: PKCS11_DAEMON_SOCKET

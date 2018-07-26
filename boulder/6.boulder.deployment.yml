@@ -17,10 +17,29 @@ spec:
         name: boulder
     spec:
       terminationGracePeriodSeconds: 5
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "sa.boulder"
+        - "sa1.boulder"
+        - "sa2.boulder"
+        - "ca.boulder"
+        - "ca1.boulder"
+        - "ca2.boulder"
+        - "ra.boulder"
+        - "ra1.boulder"
+        - "ra2.boulder"
+        - "va.boulder"
+        - "va1.boulder"
+        - "va2.boulder"
+        - "publisher.boulder"
+        - "publisher1.boulder"
+        - "publisher2.boulder"
+        - "ocsp-updater.boulder"
+        - "admin-revoker.boulder"
       containers:
       - name: boulder
-        image: letsencrypt/boulder-tools-go1.10.2:2018-06-12
-        command: ["/go/src/github.com/letsencrypt/boulder/test/entrypoint.sh"]
+        image: dtomcej/boulder:meetup201806
         env:
         - name: FAKE_DNS
           value: 10.110.110.110
@@ -29,5 +48,5 @@ spec:
         - name: BOULDER_CONFIG_DIR
           value: test/config
         ports:
+        - containerPort: 4000
         - containerPort: 4001
-        - containerPort: 9092
