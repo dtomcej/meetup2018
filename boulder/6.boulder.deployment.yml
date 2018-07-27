@@ -37,6 +37,15 @@ spec:
         - "publisher2.boulder"
         - "ocsp-updater.boulder"
         - "admin-revoker.boulder"
+      initContainers:
+        - name: wait-for-boulder-mysql-init
+          image: groundnuty/k8s-wait-for:v1.1
+          imagePullPolicy: Always
+          args: ["pod", "-lname=boulder-mysql"]      
+        - name: wait-for-boulder-hsm-init
+          image: groundnuty/k8s-wait-for:v1.1
+          imagePullPolicy: Always
+          args: ["pod", "-lname=boulder-hsm"]      
       containers:
       - name: boulder
         image: dtomcej/boulder:meetup201806
@@ -50,3 +59,10 @@ spec:
         ports:
         - containerPort: 4000
         - containerPort: 4001
+        readinessProbe:
+          httpGet:
+            path: /directory
+            port: 4001
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1

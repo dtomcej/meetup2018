@@ -17,13 +17,24 @@ spec:
         name: boulder-hsm
     spec:
       terminationGracePeriodSeconds: 5
+      initContainers:
+        - name: wait-for-boulder-mysql-init
+          image: groundnuty/k8s-wait-for:v1.1
+          imagePullPolicy: Always
+          args: ["pod", "-lname=boulder-mysql"]      
       containers:
-      - name: boulder-hsm
-        image: dtomcej/boulder:meetup2018
-        command: ["/usr/local/bin/pkcs11-daemon", "/usr/lib/softhsm/libsofthsm2.so"]
-        env:
-        - name: PKCS11_DAEMON_SOCKET
-          value: tcp://0.0.0.0:5657
-        ports:
-        - name: tcp
-          containerPort: 5657
+        - name: boulder-hsm
+          image: dtomcej/boulder:meetup2018
+          command: ["/usr/local/bin/pkcs11-daemon", "/usr/lib/softhsm/libsofthsm2.so"]
+          env:
+          - name: PKCS11_DAEMON_SOCKET
+            value: tcp://0.0.0.0:5657
+          ports:
+          - name: tcp
+            containerPort: 5657
+          readinessProbe:
+            tcpSocket:
+              port: 5657
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 1
