@@ -48,7 +48,7 @@ spec:
           args: ["pod", "-lname=boulder-hsm"]      
       containers:
       - name: boulder
-        image: dtomcej/boulder:meetup201806
+        image: dtomcej/boulder:meetup2018-newcerts
         env:
         - name: FAKE_DNS
           value: 10.110.110.110

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "Creating Directories..."
+rm -rf certs
 mkdir certs certs/boulder certs/certs certs/newcerts certs/private certs/intermediate certs/intermediate/certs certs/intermediate/csr certs/intermediate/private 2>/dev/null 
 
 echo "Preparing Certs Directory..."
@@ -39,6 +40,10 @@ cp certs/private/ca.key.pem certs/boulder/test-root.key
 cp certs/private/ca.key.der certs/boulder/test-root.key.der
 
 cp certs/intermediate/certs/intermediate.cert.pem certs/boulder/test-ca.pem
+cp certs/intermediate/certs/intermediate.cert.pem certs/boulder/test-ca2.pem
 cp certs/intermediate/certs/intermediate.cert.der certs/boulder/test-ca.der
 cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca.key
+cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca2.key
 cp certs/intermediate/private/intermediate.key.der certs/boulder/test-ca.key.der
+
+docker build . -t dtomcej/boulder:meetup2018-newcerts
