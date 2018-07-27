@@ -67,24 +67,16 @@ default_md          = sha256
 # Extension to add when the -x509 option is used.
 x509_extensions     = v3_ca
 
+# Don't prompt us, use the values
+prompt              = no
+
 [ req_distinguished_name ]
 # See <https://en.wikipedia.org/wiki/Certificate_signing_request>.
-countryName                     = Country Name (2 letter code)
-stateOrProvinceName             = State or Province Name
-localityName                    = Locality Name
-0.organizationName              = Organization Name
-organizationalUnitName          = Organizational Unit Name
-commonName                      = Common Name
-emailAddress                    = Email Address
-
-# Optionally, specify some defaults.
-countryName_default             = CA
-stateOrProvinceName_default     = Alberta
-localityName_default            = Edmonton
-0.organizationName_default      = Containous
-commonName_default              = TOMCEJ ROOT CA
-#organizationalUnitName_default  = 
-#emailAddress_default            =
+C   = CA
+ST  = Alberta
+L   = Edmonton
+O   = Containous
+CN  = TOMCEJ ROOT CA
 
 [ v3_ca ]
 # Extensions for a typical CA (`man x509v3_config`).
