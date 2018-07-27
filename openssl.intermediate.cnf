@@ -7,21 +7,21 @@ default_ca = CA_default
 
 [ CA_default ]
 # Directory and file locations.
-dir               = .
-certs             = certs
-crl_dir           = crl
-new_certs_dir     = newcerts
-database          = index.txt
-serial            = serial
-RANDFILE          = private/.rand
+dir               = certs/intermediate
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+RANDFILE          = $dir/private/.rand
 
 # The root key and root certificate.
-private_key       = private/intermediate.key.pem
-certificate       = certs/intermediate.cert.pem
+private_key       = $dir/private/intermediate.key.pem
+certificate       = $dir/certs/intermediate.cert.pem
 
 # For certificate revocation lists.
-crlnumber         = crlnumber
-crl               = crl/intermediate.crl.pem
+crlnumber         = $dir/crlnumber
+crl               = $dir/crl/intermediate.crl.pem
 crl_extensions    = crl_ext
 default_crl_days  = 30
 

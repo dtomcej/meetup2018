@@ -3,54 +3,11 @@ E2E Encryption using Traefik, and Boulder
 
 Generate root certs:
 ```bash
-cd certs
-
-mkdir certs csr newcerts private
-touch index.txt
-echo 1000 > serial
-
-openssl genrsa -aes256 -out private/ca.key.pem 4096
-
-openssl req -config openssl.cnf \
-      -key private/ca.key.pem \
-      -new -x509 -days 7300 -sha256 -extensions v3_ca \
-      -out certs/ca.cert.pem
+./gencerts.sh
 ```
-*Make sure you add a "ROOT" Common Name in the options*
+* Note: Passphrase is set to `meetup2018` for keys
 
-``bash
-mkdir intermediate
-cd intermediate
-mkdir certs csr private
-touch index.txt
-echo 1000 > serial
-echo 1000 > crlnumber
-cd ..
-
-openssl genrsa -aes256 \
-      -out intermediate/private/intermediate.key.pem 4096
-
-openssl req -config intermediate/openssl.cnf -new -sha256 \
-      -key intermediate/private/intermediate.key.pem \
-      -out intermediate/csr/intermediate.csr.pem
-
-*Make sure you add an "INTERMEDIATE CA" Common Name in the options*
-
-```bash
-openssl ca -config openssl.cnf -extensions v3_intermediate_ca \
-      -days 3650 -notext -md sha256 \
-      -in intermediate/csr/intermediate.csr.pem \
-      -out intermediate/certs/intermediate.cert.pem
-
-```
-
-Verify using:
-
-```bash
-openssl verify -CAfile certs/ca.cert.pem \
-      intermediate/certs/intermediate.cert.pem
-```
-
+From:
 
 https://jamielinux.com/docs/openssl-certificate-authority/index.html
 
