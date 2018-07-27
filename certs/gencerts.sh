@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mkdir certs csr newcerts private intermediate/certs intermediate/csr intermediate/private
+mkdir certs newcerts private intermediate/certs intermediate/csr intermediate/private
 
 openssl genrsa -aes256 -passout pass:meetup2018 -out private/ca.key.pem 4096
 
