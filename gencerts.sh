@@ -2,7 +2,7 @@
 
 echo "Creating Directories..."
 rm -rf certs
-mkdir certs certs/boulder certs/certs certs/newcerts certs/private certs/intermediate certs/intermediate/certs certs/intermediate/csr certs/intermediate/private 2>/dev/null 
+mkdir certs certs/boulder certs/certs certs/newcerts certs/private certs/pkcs12 certs/intermediate certs/intermediate/certs certs/intermediate/csr certs/intermediate/private 2>/dev/null 
 
 echo "Preparing Certs Directory..."
 rm -rf certs/index.txt certs/intermediate/index.txt
@@ -50,4 +50,8 @@ cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca.key
 cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca2.key
 cp certs/intermediate/private/intermediate.key.der certs/boulder/test-ca.key.der
 
+echo "Creating Root Cert PKCS12 Bundle..."
+openssl pkcs12 -export -out certs/pkcs12/root.p12 -inkey certs/private/ca.key.pem -passin pass:meetup2018  -password pass:meetup2018 -in certs/certs/ca.cert.pem 2>/dev/null
+
+echo "Building Docker Image with Certs..."
 docker build . -t dtomcej/boulder:meetup2018-certsadded
