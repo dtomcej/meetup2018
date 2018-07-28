@@ -76,7 +76,7 @@ C   = CA
 ST  = Alberta
 L   = Edmonton
 O   = Containous
-CN  = TOMCEJ INTERMEDIATE 1 CA
+CN  = TOMCEJ INTERMEDIATE 2 CA
 
 [ v3_ca ]
 # Extensions for a typical CA (`man x509v3_config`).

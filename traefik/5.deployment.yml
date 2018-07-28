@@ -18,6 +18,11 @@ spec:
     spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 5
+      initContainers:
+        - name: wait-for-boulder-init
+          image: groundnuty/k8s-wait-for:v1.1
+          imagePullPolicy: Always
+          args: ["pod", "-lname=boulder"]      
       containers:
       - image: traefik:v1.7.0-rc2-alpine
         name: traefik-ingress-lb

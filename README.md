@@ -30,3 +30,5 @@ Boulder folder has 3 parts:
 (Ensure traefik.rocks and traefik2.rocks resolves to localhost either by your `/etc/hosts` file, or DNS A records in your resolver)
 * `kubectl create -f traefik`
 * `kubectl create -f boulder`
+
+Browse to: `https://traefik.rocks:30443/`
