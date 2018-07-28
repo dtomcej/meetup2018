@@ -22,3 +22,6 @@ spec:
     - protocol: TCP
       port: 4511
       name: publisher-d
+    - protocol: TCP
+      port: 4512
+      name: publisher-e
