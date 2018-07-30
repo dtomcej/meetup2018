@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: Always
           args: ["pod", "-lname=boulder"]      
       containers:
-      - image: traefik:v1.7.0-rc2-alpine
+      - image: dtomcej/traefik:meetup2018-certsadded
         name: traefik-ingress-lb
         ports:
         - name: http

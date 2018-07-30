@@ -32,7 +32,7 @@ Boulder folder has 3 parts:
 
 (Ensure traefik.rocks and traefik2.rocks resolves to localhost either by your `/etc/hosts` file, or DNS A records in your resolver).
 
-We will also require the root cert in `certs/pkcs12`
+We will also require the intermediate cert in `certs/browser` to be added and trusted by your client/browser.
 
 * `kubectl create -f nginx`
 * `kubectl create -f boulder`

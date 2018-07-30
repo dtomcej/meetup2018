@@ -2,7 +2,7 @@
 
 echo "Creating Directories..."
 rm -rf certs
-mkdir certs certs/boulder certs/certs certs/newcerts certs/private certs/pkcs12 certs/intermediate certs/intermediate/certs certs/intermediate/csr certs/intermediate/private 2>/dev/null 
+mkdir certs certs/boulder certs/certs certs/newcerts certs/private certs/browser certs/minica certs/intermediate certs/intermediate/certs certs/intermediate/csr certs/intermediate/private 2>/dev/null 
 
 echo "Preparing Certs Directory..."
 rm -rf certs/index.txt certs/intermediate/index.txt
@@ -38,6 +38,9 @@ openssl rsa -in certs/intermediate/private/intermediate.key.pem -passin pass:mee
 openssl x509 -outform der -in certs/intermediate/certs/intermediate.cert.pem -out certs/intermediate/certs/intermediate.cert.der 2>/dev/null
 openssl x509 -outform der -in certs/intermediate/certs/intermediate2.cert.pem -out certs/intermediate/certs/intermediate2.cert.der 2>/dev/null
 
+echo "Creating MiniCA Certificate Files..."
+openssl rsa -in certs/intermediate/private/intermediate.key.pem -passin pass:meetup2018 -out certs/minica/minica-key.pem 2>/dev/null
+cp certs/intermediate/certs/intermediate2.cert.pem certs/minica/minica.pem
 echo "Moving Boulder Certificates to Boulder Directory..."
 cp certs/certs/ca.cert.pem certs/boulder/test-root.pem
 cp certs/private/ca.key.pem certs/boulder/test-root.key
@@ -50,8 +53,14 @@ cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca.key
 cp certs/intermediate/private/intermediate.key.pem certs/boulder/test-ca2.key
 cp certs/intermediate/private/intermediate.key.der certs/boulder/test-ca.key.der
 
-echo "Creating Root Cert PKCS12 Bundle..."
-openssl pkcs12 -export -out certs/pkcs12/root.p12 -inkey certs/private/ca.key.pem -passin pass:meetup2018  -password pass:meetup2018 -in certs/certs/ca.cert.pem 2>/dev/null
+echo "Moving Intermediate Cert For Browser Trust"
+cp certs/intermediate/certs/intermediate2.cert.pem certs/browser/intermediate.crt
 
-echo "Building Docker Image with Certs..."
-docker build . -t dtomcej/boulder:meetup2018-certsadded
+echo "Building Boulder Docker Image with Certs..."
+docker build -f boulder.Dockerfile -t dtomcej/boulder:meetup2018-certsadded . 
+
+echo "Building MiniCA Docker Image with Certs..."
+docker build -f minica.Dockerfile -t dtomcej/minica:meetup2018-certsadded .
+
+echo "Building Traefik Docker Image with Certs..."
+docker build -f traefik.Dockerfile -t dtomcej/traefik:meetup2018-certsadded .

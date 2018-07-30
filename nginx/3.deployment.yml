@@ -13,9 +13,27 @@ spec:
       labels:
         app: nginx
     spec:
+      initContainers:
+        - name: generate-certs
+          image: dtomcej/minica:meetup2018-certsadded
+          command: ["/entrypoint.sh"]
+          env:
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          volumeMounts:
+          - name: certs
+            mountPath: /ssl
       containers:
       - name: nginx
         image: nginx:1.15.2
         ports:
         - containerPort: 80
           name: http
+        volumeMounts:
+        - name: certs
+          mountPath: /ssl
+      volumes:
+      - emptyDir: {}
+        name: certs
