@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx
-  namespace: nginx
+  name: whoami
+  namespace: whoami
 spec:
   rules:
   - host: traefik.rocks
     http:
       paths:
-      - path: /nginx
+      - path: /
         backend:
-          serviceName: nginx
-          servicePort: http
+          serviceName: whoami
+          servicePort: https

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: whoami
+  namespace: whoami
+spec:
+  selector:
+    app: whoami
+  ports:
+    - protocol: TCP
+      port: 443
+      name: https

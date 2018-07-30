@@ -64,3 +64,13 @@ docker build -f minica.Dockerfile -t dtomcej/minica:meetup2018-certsadded .
 
 echo "Building Traefik Docker Image with Certs..."
 docker build -f traefik.Dockerfile -t dtomcej/traefik:meetup2018-certsadded .
+
+echo "Creating Boulder Objects..."
+kubectl create -f boulder
+
+echo "Creating Whoami Objects..."
+kubectl create -f whoami
+
+echo "Creating Traefik Objects..."
+kubectl create -f traefik
+
