@@ -28,7 +28,7 @@ Boulder folder has 3 parts:
 * HSM - Keystore
 * Boulder itself
 
- - We use an init container to wait for requirements to be read before starting pod. This coupled with good readiness probes allows evaluation order independance.
+We use an init container to wait for requirements to be read before starting pod. This coupled with good readiness probes allows evaluation order independance.
 
 (Ensure traefik.rocks and traefik2.rocks resolves to localhost either by your `/etc/hosts` file, or DNS A records in your resolver).
 
