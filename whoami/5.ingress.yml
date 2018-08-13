@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: whoami2
+  namespace: whoami
+spec:
+  rules:
+  - host: traefik2.rocks
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: whoami
+          servicePort: https

@@ -4,7 +4,7 @@ E2E Encryption using Traefik, and Boulder
 Generate root and intermediate certs:
 
 ```bash
-./gencerts.sh
+./bootstrap.sh
 ```
 * Note: Passphrase is set to `meetup2018` for keys
 
@@ -34,8 +34,17 @@ Boulder folder has 3 parts:
 
 We will also require the intermediate cert in `certs/browser` to be added and trusted by your client/browser.
 
-* `kubectl create -f nginx`
-* `kubectl create -f boulder`
-* `kubectl create -f traefik`
+Add:
+`/certs/browser/intermediate.crt`
+
+to trust store (SSL and x.509 Basic)
 
 Browse to: `https://traefik.rocks:30443/`
+
+and
+
+`http://localhost:30880/dashboard/`
+
+Scaling app:
+
+`kubectl scale deployment whoami -n whoami --replicas=10`
